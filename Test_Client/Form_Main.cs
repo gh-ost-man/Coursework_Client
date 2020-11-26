@@ -7,25 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TreeGedaLib;
 
 namespace Test_Client
 {
     public partial class Form_Main : Form
     {
-        User user;
         Form activeForm = null;
         public Form_Main()
         {
             InitializeComponent();
         }
 
-        public Form_Main(User _user)
-        {
-            InitializeComponent();
-            this.user = _user;
-            customizeDesign();
-        }
+   
 
         private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -78,7 +71,7 @@ namespace Test_Client
 
         private void btn_Test_Show_Click(object sender, EventArgs e)
         {
-            openChildForm(new Form_ShowTests(user));
+            openChildForm(new Form_ShowTests());
         }
     }
 }
