@@ -34,9 +34,6 @@
             this.textBox_Login = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox_Host = new System.Windows.Forms.TextBox();
-            this.btn_Connect = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,6 +72,7 @@
             this.textBox_Password.PasswordChar = '*';
             this.textBox_Password.Size = new System.Drawing.Size(170, 23);
             this.textBox_Password.TabIndex = 3;
+            this.textBox_Password.Text = "33333";
             // 
             // textBox_Login
             // 
@@ -82,6 +80,7 @@
             this.textBox_Login.Name = "textBox_Login";
             this.textBox_Login.Size = new System.Drawing.Size(170, 20);
             this.textBox_Login.TabIndex = 2;
+            this.textBox_Login.Text = "black";
             // 
             // label2
             // 
@@ -101,41 +100,11 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Login";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 26);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Host";
-            // 
-            // textBox_Host
-            // 
-            this.textBox_Host.Location = new System.Drawing.Point(69, 23);
-            this.textBox_Host.Name = "textBox_Host";
-            this.textBox_Host.Size = new System.Drawing.Size(142, 20);
-            this.textBox_Host.TabIndex = 3;
-            this.textBox_Host.Text = "127.0.0.1";
-            // 
-            // btn_Connect
-            // 
-            this.btn_Connect.Location = new System.Drawing.Point(217, 23);
-            this.btn_Connect.Name = "btn_Connect";
-            this.btn_Connect.Size = new System.Drawing.Size(75, 23);
-            this.btn_Connect.TabIndex = 4;
-            this.btn_Connect.Text = "Connect";
-            this.btn_Connect.UseVisualStyleBackColor = true;
-            this.btn_Connect.Click += new System.EventHandler(this.btn_Connect_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btn_Connect);
-            this.Controls.Add(this.textBox_Host);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -143,7 +112,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -155,9 +123,6 @@
         private System.Windows.Forms.TextBox textBox_Login;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox_Host;
-        private System.Windows.Forms.Button btn_Connect;
     }
 }
 
