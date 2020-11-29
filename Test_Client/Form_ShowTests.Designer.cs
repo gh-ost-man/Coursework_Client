@@ -59,7 +59,6 @@
             this.btn_LoadTest.TabIndex = 2;
             this.btn_LoadTest.Text = "Load Tests";
             this.btn_LoadTest.UseVisualStyleBackColor = true;
-            this.btn_LoadTest.Click += new System.EventHandler(this.btn_LoadTest_Click);
             // 
             // Form_ShowTests
             // 
