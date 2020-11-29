@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DALServerDB">
-      <HintPath>..\..\Coursework_Server\DALServerDB\bin\Debug\DALServerDB.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,25 +61,12 @@
     <Compile Include="Form_Main.Designer.cs">
       <DependentUpon>Form_Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form_Result.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Result.Designer.cs">
-      <DependentUpon>Form_Result.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form_ShowTests.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form_ShowTests.Designer.cs">
       <DependentUpon>Form_ShowTests.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form_Test.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Test.Designer.cs">
-      <DependentUpon>Form_Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MemoryStreamExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -91,14 +75,8 @@
     <EmbeddedResource Include="Form_Main.resx">
       <DependentUpon>Form_Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_Result.resx">
-      <DependentUpon>Form_Result.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form_ShowTests.resx">
       <DependentUpon>Form_ShowTests.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_Test.resx">
-      <DependentUpon>Form_Test.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

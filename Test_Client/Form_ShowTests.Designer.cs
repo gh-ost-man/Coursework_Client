@@ -39,8 +39,6 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(13, 13);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(298, 271);
             this.dataGridView1.TabIndex = 0;
             // 
@@ -52,7 +50,6 @@
             this.btn_PassTest.TabIndex = 1;
             this.btn_PassTest.Text = "To pass a test";
             this.btn_PassTest.UseVisualStyleBackColor = true;
-            this.btn_PassTest.Click += new System.EventHandler(this.btn_PassTest_Click);
             // 
             // btn_LoadTest
             // 
@@ -74,7 +71,6 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "Form_ShowTests";
             this.Text = "Form_ShowTests";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_ShowTests_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

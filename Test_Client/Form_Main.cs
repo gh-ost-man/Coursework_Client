@@ -1,5 +1,4 @@
-﻿using DALServerDB;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,25 +7,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TreeGedaLib;
 
 namespace Test_Client
 {
     public partial class Form_Main : Form
     {
-        TreeGedaLib.User user;
+        User user;
         Form activeForm = null;
         public Form_Main()
         {
             InitializeComponent();
         }
 
-        public Form_Main(TreeGedaLib.User _user)
+        public Form_Main(User _user)
         {
             InitializeComponent();
             this.user = _user;
             customizeDesign();
-
-            label_UserName.Text = $"{user.FirstName} {user.LastName}";
         }
 
         private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)

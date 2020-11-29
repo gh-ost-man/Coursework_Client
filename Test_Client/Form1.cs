@@ -1,5 +1,4 @@
-﻿using DALServerDB;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,67 +12,21 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TreeGedaLib;
 
 namespace Test_Client
 {
     public partial class Form1 : Form
     {
-        int portSend = 5556;
-        int portRecive = 5555;
 
-        TreeGedaLib.User user;
-
-        TcpClient clientTcp = null;
-        NetworkStream stream;
+        User user;
+        Socket sendSocket = null;
+      
+        bool flag = true;
 
         public Form1()
         {
             InitializeComponent();
-
-            IPAddress localAddr = IPAddress.Parse("127.0.0.1");
-            TcpListener server = new TcpListener(localAddr, portRecive);
-            server.Start();
-
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    TcpClient client = server.AcceptTcpClient();
-                    NetworkStream stream = client.GetStream();
-
-                    byte[] buff = new byte[1024];
-                    MemoryStream ms = new MemoryStream();
-
-                    do
-                    {
-                        int bytes = stream.Read(buff, 0, buff.Length);
-                        ms.Append(buff);
-                    }
-                    while (stream.DataAvailable);
-
-
-                    var binForm = new BinaryFormatter();
-                    ms.Position = 0;
-                    user = (TreeGedaLib.User)binForm.Deserialize(ms);
-
-                    ms.Close();
-
-                    if (user.Id > 0)
-                    {
-                        TreeGedaLib.User uu = user;
-
-                        Form_Main main = new Form_Main(uu);
-                        Invoke(new Action(() => { this.Hide(); }));
-                        main.ShowDialog();
-                    }
-                    else
-                    {
-                        MessageBox.Show("User not found");
-                        btn_SignIn.Invoke(new Action(() => { btn_SignIn.Enabled = true; }));
-                    }
-
-                }
-            });
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -83,37 +36,96 @@ namespace Test_Client
 
         private void btn_SignIn_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(textBox_Login.Text) || String.IsNullOrEmpty(textBox_Password.Text))
+            try
             {
-                MessageBox.Show("Enter login and password", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (!sendSocket.Connected || sendSocket == null) return;
+
+                if (String.IsNullOrEmpty(textBox_Login.Text) || String.IsNullOrEmpty(textBox_Password.Text))
+                {
+                    MessageBox.Show("Enter login and password", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                Byte[] buff = new byte[1024];
+
+                User user = new User();
+                user.Login = textBox_Login.Text;
+                user.Password = textBox_Password.Text;
+
+                using (var ms = new MemoryStream())
+                {
+                    var binForm = new BinaryFormatter();
+                    binForm.Serialize(ms, user);
+
+                    buff = ms.ToArray();
+                }
+
+                Byte[] sendByte = new Byte[1024];
+                sendSocket.Send(buff);
+
+                Thread thread = new Thread(ReseiveServerMsg);
+                thread.IsBackground = true;
+                thread.Start(sendSocket);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+        private void ReseiveServerMsg(Object sender)
+        {
+            while (flag)
+            {
+                Socket receiveSocket = sender as Socket;
+                if (receiveSocket == null) throw new ArgumentException("Receive Socket Exception");
+                Byte[] receiveByte = new Byte[1024];
+                try
+                {
+                    Int32 nCount = receiveSocket.Receive(receiveByte);
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        var bf = new BinaryFormatter();
+                        ms.Write(receiveByte, 0, receiveByte.Length);
+                        ms.Seek(0, SeekOrigin.Begin);
+
+                        user = (User)bf.Deserialize(ms);
+
+                        if (user.Id > 0)
+                        {
+                            flag = false;
+                            Form_Main main = new Form_Main(user);
+                            Invoke(new Action(() => { this.Hide(); }));
+                            main.ShowDialog();
+                        }
+                        else
+                        {
+                            MessageBox.Show("login or password is incorrect");
+                        }
+                    }
+                }
+                catch (SocketException se) { MessageBox.Show(se.Message); return; }
+
+            }
+
+        }
+
+        private void btn_Connect_Click(object sender, EventArgs e)
+        {
+            sendSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPHostEntry ipHost = Dns.GetHostEntry("localhost");
+            IPAddress ipAddress = ipHost.AddressList[1];
+            IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, 33000);
+
+            try
+            {
+                sendSocket.Connect(ipEndPoint);
+            }
+            catch (SocketException se)
+            {
+                MessageBox.Show(se.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
-
-            clientTcp = new TcpClient();
-            clientTcp.Connect("localhost", portSend);
-            stream = clientTcp.GetStream();
-
-            TreeGedaLib.User u = new TreeGedaLib.User();
-            u.Login = textBox_Login.Text;
-            u.Password = textBox_Password.Text;
-
-            byte[] data;
-
-
-            using (var ms = new MemoryStream())
-            {
-                var binForm = new BinaryFormatter();
-                binForm.Serialize(ms, u);
-
-                data = ms.ToArray();
-            }
-
-
-            stream.Write(data, 0, data.Length);
-            stream.Close();
-            btn_SignIn.Enabled = false;
-
         }
     }
 }
